@@ -1,0 +1,19 @@
+<launch>
+
+  <arg name="name" default="erlecopter"/>
+  <arg name="model" default="$(find erle_models)/urdf/rover.urdf"/>
+  <!-- <arg name="tf_prefix" default="$(optenv ROS_NAMESPACE)"/> -->
+  <arg name="tf_prefix" default="rover_0"/>
+
+  <!-- send the robot XML to param server -->
+
+  <group ns="rover_0">
+
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(arg model)'"/>
+  <param name="tf_prefix" type="string" value="$(arg tf_prefix)" />
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+  </node>
+  </group>
+
+</launch>

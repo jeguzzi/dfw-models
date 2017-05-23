@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+
+<robot name="erlecopter" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Properties -->
+  <xacro:property name="namespace" value="erlecopter" />
+  <xacro:property name="mesh_file" value="erlecopter.dae" />
+  <xacro:property name="mesh_scale" value="1 1 1"/> <!-- 1 1 1 -->
+  <xacro:property name="mesh_scale_prop" value="1 1 1"/>
+  <xacro:property name="body_length" value="0.18" /> <!-- [m] 0.10 -->
+  <xacro:property name="body_width" value="0.12" /> <!-- [m] 0.10 -->
+  <xacro:property name="body_height" value="0.10" /> <!-- [m] -->
+  <xacro:property name="arm_length_front_x" value="0.141" /> <!-- [m] 0.1425  0.22 -->
+  <xacro:property name="arm_length_back_x" value="0.141" /> <!-- [m] 0.154  0.22 -->
+  <xacro:property name="arm_length_front_y" value="0.141" /> <!-- [m] 0.251  0.22 -->
+  <xacro:property name="arm_length_back_y" value="0.141" /> <!-- [m] 0.234  0.22 -->
+  <xacro:property name="rotor_offset_top" value="0.030" /> <!-- [m] 0.023-->
+  <xacro:property name="radius_rotor" value="0.12" /> <!-- [m] -->
+  <xacro:property name="color" value="DarkGrey" />
+
+  <xacro:include filename="$(find erle_models)/urdf/multirotor_base.xacro" />
+
+  <!-- Instantiate multirotor_base_macro once -->
+  <xacro:multirotor_base_macro
+    robot_namespace="${namespace}"
+    body_length="${body_length}"
+    body_width="${body_width}"
+    body_height="${body_height}"
+    mesh_file="${mesh_file}"
+    mesh_scale="${mesh_scale}"
+    color="${color}"
+    >
+  </xacro:multirotor_base_macro>
+
+  <!-- Instantiate rotors -->
+  <xacro:vertical_rotor
+    robot_namespace="${namespace}"
+    direction="ccw"
+    parent="base_link"
+    radius_rotor="${radius_rotor}"
+    motor_number="0"
+    mesh="erlecopter_prop"
+    mesh_scale="${mesh_scale_prop}"
+    color="Yellow">
+    <origin xyz="${arm_length_front_x} -${arm_length_front_y} ${rotor_offset_top}" rpy="0 0 0" />
+  </xacro:vertical_rotor>
+
+  <xacro:vertical_rotor
+    robot_namespace="${namespace}"
+    direction="ccw"
+    parent="base_link"
+    radius_rotor="${radius_rotor}"
+    motor_number="1"
+    mesh="erlecopter_prop"
+    mesh_scale="${mesh_scale_prop}"
+    color="Black">
+    <origin xyz="-${arm_length_back_x} ${arm_length_back_y} ${rotor_offset_top}" rpy="0 0 0" />
+  </xacro:vertical_rotor>
+
+  <xacro:vertical_rotor robot_namespace="${namespace}"
+    direction="cw"
+    parent="base_link"
+    radius_rotor="${radius_rotor}"
+    motor_number="2"
+    mesh="erlecopter_prop"
+    mesh_scale="${mesh_scale_prop}"
+    color="Yellow">
+    <origin xyz="${arm_length_front_x} ${arm_length_front_y} ${rotor_offset_top}" rpy="0 0 0" />
+  </xacro:vertical_rotor>
+
+  <xacro:vertical_rotor robot_namespace="${namespace}"
+    direction="cw"
+    parent="base_link"
+    radius_rotor="${radius_rotor}"
+    motor_number="3"
+    mesh="erlecopter_prop"
+    mesh_scale="${mesh_scale_prop}"
+    color="Black">
+    <origin xyz="-${arm_length_back_x} -${arm_length_back_y} ${rotor_offset_top}" rpy="0 0 0" />
+  </xacro:vertical_rotor>
+
+  <joint name="range_finder_joint" type="fixed">
+    <origin xyz="0 -0.1 0" rpy="0 1.57 0" />
+    <parent link="base_link" />
+    <child link="range_finder" />
+  </joint>
+
+  <material name="yellow">
+     <color rgba="0.8 0.8 0 1"/>
+  </material>
+
+  <link name="range_finder">
+    <visual>
+      <geometry>
+        <box size="0.01 0.03 0.03"/>
+      </geometry>
+      <material name="yellow"/>
+    </visual>
+  </link>
+
+
+</robot>

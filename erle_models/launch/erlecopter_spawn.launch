@@ -1,0 +1,10 @@
+<launch>
+   <arg name='type' default="erlecopter"/>
+   <arg name="ns" default="copter_0"/>
+   <group ns="$(arg ns)">
+      <param name="robot_description" command="$(find xacro)/xacro.py '$(find erle_models)/urdf/$(arg type).xacro'"/>
+      <param name="tf_prefix" type="string" value="$(arg ns)"/>
+      <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+      <node pkg="erle_models" type="rotors.py" name="rotors"/>
+   </group>
+</launch>

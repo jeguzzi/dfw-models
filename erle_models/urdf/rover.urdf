@@ -1,0 +1,96 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="rover">
+  <joint name="front_left_steering_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="front_left_wheel_steering_block"/>
+    <origin rpy="-1.52 0 0" xyz="0.240444 0.1 0.07103"/>
+    <axis xyz="0  -1  0"/>
+    <limit effort="10.0" lower="-0.7727" upper="0.7727" velocity="0.0"/>
+  </joint>
+  <joint name="front_right_steering_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="front_right_wheel_steering_block"/>
+    <origin rpy="1.52 0 0" xyz="0.240444 -0.1 0.07103"/>
+    <axis xyz="0  1  0"/>
+    <limit effort="10.0" lower="-0.7727" upper="0.7727" velocity="0.0"/>
+  </joint>
+  <joint name="front_left_wheel_joint" type="fixed">
+    <parent link="front_left_wheel_steering_block"/>
+    <child link="front_left_wheel"/>
+    <origin rpy="0 0 0" xyz="0.0 0.0 0.043124"/>
+    <axis xyz="0.00000000e+00 8.30000000e-04 1.00000000e+00"/>
+    <limit effort="10.0" lower="0" upper="0" velocity="0"/>
+  </joint>
+  <joint name="front_right_wheel_joint" type="fixed">
+    <parent link="front_right_wheel_steering_block"/>
+    <child link="front_right_wheel"/>
+    <origin rpy="0 0 0" xyz="0.0 0.0 0.043124"/>
+    <axis xyz="0.00000000e+00 8.30000000e-04 -1.00000000e+00"/>
+    <limit effort="0" lower="0" upper="0" velocity="0"/>
+  </joint>
+  <joint name="rear_left_wheel_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="rear_left_wheel"/>
+    <origin rpy="-1.52 0 0" xyz="-0.15 0.15 0.069394"/>
+    <axis xyz="0.00000000e+00 8.30000000e-04 1.00000000e+00"/>
+    <limit effort="0" lower="0" upper="0" velocity="0"/>
+  </joint>
+  <joint name="rear_right_wheel_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="rear_right_wheel"/>
+    <origin rpy="1.52 0 0" xyz="-0.15 -0.15 0.069394"/>
+    <axis xyz="0.00000000e+00 8.30000000e-04 -1.00000000e+00"/>
+    <limit effort="0" lower="0" upper="0" velocity="0"/>
+  </joint>
+  <joint name="base_link_chassis" type="fixed">
+    <parent link="base_link"/>
+    <child link="chassis"/>
+    <origin rpy="0 0 0" xyz="0 0 -0.01"/>
+  </joint>
+  <link name="base_link">
+  </link>
+  <link name="chassis">
+    <visual name="visual">
+      <origin rpy="-1.5708 0 3.1416" xyz="0.04 0.392 0.052"/>
+      <geometry>
+        <mesh filename="package://erle_models/meshes/meshes_rover/ErleRover_chassis.STL" scale="0.0011 0.0011 0.0011"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="front_left_wheel">
+    <visual name="tire_visual">
+      <origin rpy="3.1416 0 0" xyz="-0.24 -0.02 0.334"/>
+      <geometry>
+        <mesh filename="package://erle_models/meshes/meshes_rover/ErleRover_wheel4.STL" scale="0.0014 0.0014 0.0014"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="front_right_wheel">
+    <visual name="visual">
+      <origin rpy="3.1416 0 0" xyz="0.25 -0.020000 0.334"/>
+      <geometry>
+        <mesh filename="package://erle_models/meshes/meshes_rover/ErleRover_wheel2.STL" scale="0.0014 0.0014 0.0014"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="rear_left_wheel">
+    <visual name="visual">
+      <origin rpy="0 0 0" xyz=" 0.25 0.02 -0.666"/>
+      <geometry>
+        <mesh filename="package://erle_models/meshes/meshes_rover/ErleRover_wheel3.STL" scale="0.0014 0.0014 0.0014"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="rear_right_wheel">
+    <visual name="visual">
+      <origin rpy="0 0 0" xyz="0.25 0.02 -0.666"/>
+      <geometry>
+        <mesh filename="package://erle_models/meshes/meshes_rover/ErleRover_wheel1.STL" scale="0.0014 0.0014 0.0014"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="front_right_wheel_steering_block">
+  </link>
+  <link name="front_left_wheel_steering_block">
+  </link>
+</robot>
